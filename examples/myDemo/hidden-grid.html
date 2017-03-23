@@ -1,0 +1,96 @@
+<!--用下拉框控制页面显示哪个表格-->
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>my demo: hidden grid</title>
+    <link rel="stylesheet" href="../../slick.grid.css" type="text/css"/>
+    <link rel="stylesheet" href="../../css/smoothness/jquery-ui-1.11.3.custom.css" type="text/css"/>
+</head>
+<body>
+<table width="100%">
+    <tr>
+        <td>
+            <select id="data">
+                <option value = "none">  请选择 </option>
+                <option value = "myGrid">  myGrid </option>
+                <option value = "myGrid2">  myGrid2 </option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td id="myGridTd"  width="50%">
+            <div id="myGrid" style="width:600px;height:500px;"></div>
+        </td>
+    </tr>
+    <tr>
+        <td  id="myGridTd2" width="50%">
+            <div id="myGrid2" style="width:600px;height:500px;"></div>
+        </td>
+    </tr>
+</table>
+
+<script src="../../lib/jquery-1.11.2.min.js"></script>
+<script src="../../lib/jquery.event.drag-2.3.0.js"></script>
+
+<script src="../../slick.core.js"></script>
+<script src="../../slick.grid.js"></script>
+
+<script>
+    var myGrid;
+    var myGrid2;
+    var myGridColumns = [
+        {id: "title", name: "myGrid", field: "title"},
+        {id: "duration", name: "Duration", field: "duration"},
+        {id: "%", name: "% Complete", field: "percentComplete"},
+        {id: "start", name: "Start", field: "start"},
+        {id: "finish", name: "Finish", field: "finish"},
+        {id: "effort-driven", name: "Effort Driven", field: "effortDriven"}
+    ];
+    var myGrid2Columns = [
+        {id: "title", name: "myGrid2", field: "title",width:120},
+        {id: "duration", name: "Duration", field: "duration"},
+        {id: "%", name: "% Complete", field: "percentComplete"},
+        {id: "start", name: "Start", field: "start"},
+        {id: "finish", name: "Finish", field: "finish"},
+        {id: "effort-driven", name: "Effort Driven", field: "effortDriven"}
+    ];
+
+    var options = {
+        enableCellNavigation: true,
+        enableColumnReorder: false
+    };
+
+    $(function () {
+        var data = [];
+        for (var i = 0; i < 500; i++) {
+            data[i] = {
+                title: "Task " + i,
+                duration: "5 days",
+                percentComplete: Math.round(Math.random() * 100),
+                start: "01/01/2009",
+                finish: "01/05/2009",
+                effortDriven: (i % 5 == 0)
+            };
+        }
+
+        myGrid = new Slick.Grid("#myGrid", data, myGridColumns, options);
+        myGrid2 = new Slick.Grid("#myGrid2", data, myGrid2Columns, options);
+
+        $("#data").bind("change",function(){
+            var selectedGrid = $(this).val();
+            if (selectedGrid == "myGrid"){
+                $("#myGridTd").show();
+                $("#myGridTd2").hide();
+            }else if(selectedGrid == "myGrid2") {
+                $("#myGridTd").hide();
+                $("#myGridTd2").show();
+            }else {
+                $("#myGridTd").show();
+                $("#myGridTd2").show();
+            }
+        });
+    })
+</script>
+</body>
+</html>
